@@ -1,14 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './MainPage.scss'
-import WeatherList from '../WeatherList/WeatherList'
 
+import WeatherList from '../WeatherList/WeatherList'
 import WeatherContext from '../../App'
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
-
 import {
-  formatDateStringNoYear,
   formatDateStringToTime,
+  formatDateStringNew,
+  fahrenheitToCelsius,
 } from '../../utils/functions'
+
+import geoIcon from '../../assets/geo-position.svg'
 
 const MainPage = (props) => {
   //   const weatherContext = useContext(WeatherContext)
@@ -29,14 +31,30 @@ const MainPage = (props) => {
             <LoadingIndicator isLoading={ctx.isLoading} />
             <div className="main-page__title">
               <div className="main-page__title-item main-page__title-item--date">
-                {formatDateStringNoYear(new Date())}
+                {formatDateStringNew(new Date())}
               </div>
               <div className="main-page__title-item main-page__title-item--time">
                 {formatDateStringToTime(new Date())}
               </div>
               <div className="main-page__title-item main-page__title-item--city">
-                {ctx.locationData.translation}
+                <img className="main-page__img" src={geoIcon} alt="" />
+                <span>{ctx.locationData.translation}</span>
               </div>
+            </div>
+            <img
+              className="main-page__weather-icon"
+              src={`http://openweathermap.org/img/wn/${
+                ctx.weatherData?.weather?.length > 0
+                  ? ctx.weatherData.weather[0].icon
+                  : ''
+              }@4x.png`}
+              alt=""
+            />
+            <div className="main-page__weather-temperature">
+              {/* {`${Number.parseInt(
+                fahrenheitToCelsius(ctx.weatherData?.main?.temp),
+              )}°`} */}
+              {`${Number.parseInt(ctx.weatherData?.main?.temp)}°`}
             </div>
             <WeatherList />
           </div>
