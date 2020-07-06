@@ -22,9 +22,9 @@ const MainPage = (props) => {
       {(ctx) => (
         <div className="main-page">
           <div
-            className={`main-page__wrapper main-page__wrapper--${
+            className={`main-page__wrapper ${
               ctx.weatherData?.weather?.length > 0
-                ? ctx.weatherData.weather[0].main.toLowerCase()
+                ? `main-page__wrapper--${ctx.weatherData.weather[0].main.toLowerCase()}`
                 : ''
             } ${ctx.isLoading ? 'main-page__wrapper--hidden' : ''}`}
           >
@@ -38,7 +38,7 @@ const MainPage = (props) => {
               </div>
               <div className="main-page__title-item main-page__title-item--city">
                 <img className="main-page__img" src={geoIcon} alt="" />
-                <span>{ctx.locationData.translation}</span>
+                <span>{ctx.locationData.city}</span>
               </div>
             </div>
             <img
@@ -51,10 +51,12 @@ const MainPage = (props) => {
               alt=""
             />
             <div className="main-page__weather-temperature">
-              {/* {`${Number.parseInt(
-                fahrenheitToCelsius(ctx.weatherData?.main?.temp),
-              )}°`} */}
               {`${Number.parseInt(ctx.weatherData?.main?.temp)}°`}
+            </div>
+            <div className="main-page__weather-temperature main-page__weather-temperature--message">
+              {`Ощущается как ${Number.parseInt(
+                ctx.weatherData?.main?.feels_like,
+              )}°`}
             </div>
             <WeatherList />
           </div>

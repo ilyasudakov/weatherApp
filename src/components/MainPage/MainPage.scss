@@ -18,7 +18,8 @@
         // background: $clear-sky__gradient;
         background-color: #e4e4e4;
         min-height: calc(500px - var(--padding-top-bottom));
-        transition: 600ms ease-in-out, background-color 300ms ease-in-out;
+        transition: all 600ms ease-in-out, background-color 300ms ease-in-out, min-height 500ms ease-in-out,
+            height 500ms ease-in-out, color 50ms ease-in-out;
         border-radius: 15px;
         box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 50px rgba(0, 0, 0, 0.22);
         // text-shadow: -4px 2px 8px rgba(0, 0, 0, 0.3);
@@ -38,11 +39,23 @@
         }
         &--clouds {
             background-color: $cloudy-sky;
+            color: #111111;
         }
         &--thunderstorm,
         &--drizzle,
         &--rain {
             background-color: $stormy-sky;
+            color: #dddddd;
+
+            .main-page__title {
+                .main-page__img {
+                    filter: brightness(2);
+                }
+            }
+
+            .main-page__weather-temperature--message {
+                color: #bbbbbb !important;
+            }
         }
         &--snow {
             background-color: #999999;
@@ -50,6 +63,7 @@
 
         .main-page__img {
             max-width: 25px;
+            transition: 200ms ease-in-out;
         }
 
         .main-page__title {
@@ -58,7 +72,7 @@
                 margin-bottom: 10px;
                 padding: 5px 10px;
                 transform-origin: center;
-                transition: transform 300ms ease-in-out;
+                transition: 300ms ease-in-out;
 
                 &--date {
                     font-size: 1.25rem;
@@ -83,16 +97,23 @@
             // background-color: transparent;
             // border: 5px solid #ffffff;
             // border-radius: 999px;
-            transition: transform 500ms ease-in-out;
+            transition: 500ms ease-in-out;
             margin: 1rem 0;
             margin-bottom: 2rem;
             transform-origin: center;
         }
 
         .main-page__weather-temperature {
-            font-size: 2rem;
-            transition: transform 600ms ease-in-out;
+            font-size: 4rem;
+            transition: 600ms ease-in-out;
             transform-origin: center;
+            margin-left: 0.4em;
+            padding: 5px 10px;
+
+            &--message {
+                font-size: 1.5rem;
+                color: #444444;
+            }
         }
 
         &--hidden {
@@ -102,6 +123,29 @@
             .main-page__weather-icon,
             .main-page__weather-temperature {
                 transform: scale(0);
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        & {
+            .main-page__wrapper {
+                height: fit-content;
+                min-height: 200px;
+                max-width: fit-content;
+                padding: 25px 25px;
+
+                .main-page__weather-icon {
+                    margin: 0;
+                    max-width: 175px;
+                }
+
+                .main-page__weather-temperature {
+                    font-size: 3rem;
+                    &--message {
+                        font-size: 1.25rem;
+                    }
+                }
             }
         }
     }
