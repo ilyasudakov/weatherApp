@@ -68,6 +68,19 @@ const DaySummaryPage = (props) => {
             <span>{`${props.curWeather?.main?.pressure} мм`}</span>
           </div>
         </div>
+        {(window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth) >= 768 && (
+          <button
+            className="day-summary-page__button"
+            onClick={(event) => {
+              event.preventDefault()
+            }}
+          >
+            <span>Открыть график</span>
+            {/* <img className="day-summary-page__img" src={arrowIcon} alt="" /> */}
+          </button>
+        )}
         <div className="day-summary-page__block-name">Прогноз на 48 часов</div>
         <div className="day-summary-page__list">
           {props.forecast.map((day, index) => (
