@@ -53,6 +53,14 @@
         .weather-list__item {
             color: #eeeeee;
 
+            .weather-list__day {
+                span {
+                    &:nth-child(1) {
+                        color: #cccccc !important;
+                    }
+                }
+            }
+
             .weather-list__temperature--night {
                 color: #cccccc !important;
             }
@@ -83,6 +91,17 @@
             .weather-list__day {
                 padding: 0 5px;
                 padding-right: 25px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                span {
+                    &:nth-child(1) {
+                        transition: 300ms ease-in-out;
+                        font-size: 80%;
+                        color: #333333;
+                    }
+                }
             }
 
             .weather-list__info {
@@ -197,6 +216,13 @@
                         padding: 5px 0;
                         font-size: 1.25rem;
                         padding-bottom: 0;
+                        align-items: center;
+
+                        span {
+                            &:nth-child(1) {
+                                font-size: 60%;
+                            }
+                        }
                     }
 
                     .weather-list__info {

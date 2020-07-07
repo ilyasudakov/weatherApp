@@ -2,7 +2,10 @@ import React, { useContext } from 'react'
 import './WeatherList.scss'
 
 import WeatherContext from '../../App'
-import { formatDateStringDayOfTheWeek } from '../../utils/functions'
+import {
+  formatDateStringDayOfTheWeek,
+  formatDateStringNoYear,
+} from '../../utils/functions'
 
 const WeatherList = (props) => {
   const weatherContext = useContext(WeatherContext)
@@ -27,15 +30,23 @@ const WeatherList = (props) => {
               key={index}
               onClick={() => {
                 props.setCurDay(index)
+                // props.handleItemClick()
               }}
             >
               <div className="weather-list__day">
-                {formatDateStringDayOfTheWeek(
-                  new Date(new Date().setDate(new Date().getDate() + index)),
-                  (window.innerWidth ||
-                    document.documentElement.clientWidth ||
-                    document.body.clientWidth) < 768,
-                )}
+                <span>
+                  {formatDateStringNoYear(
+                    new Date(new Date().setDate(new Date().getDate() + index)),
+                  )}
+                </span>
+                <span>
+                  {formatDateStringDayOfTheWeek(
+                    new Date(new Date().setDate(new Date().getDate() + index)),
+                    (window.innerWidth ||
+                      document.documentElement.clientWidth ||
+                      document.body.clientWidth) < 768,
+                  )}
+                </span>
               </div>
               <div className="weather-list__info">
                 <img

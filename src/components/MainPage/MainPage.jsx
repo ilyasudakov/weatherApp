@@ -16,6 +16,8 @@ const MainPage = (props) => {
   const [curDay, setCurDay] = useState(0)
   const [menuIsHidden, setMenuIsHidden] = useState(false)
 
+  const handleItemClick = () => {}
+
   useEffect(() => {}, [curDay])
 
   return (
@@ -92,6 +94,7 @@ const MainPage = (props) => {
               setCurDay={setCurDay}
               isLoading={ctx.isLoading}
               menuIsHidden={menuIsHidden}
+              // handleItemClick={handleItemClick}
             />
           </div>
         </div>
