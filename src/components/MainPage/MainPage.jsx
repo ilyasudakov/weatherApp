@@ -113,16 +113,18 @@ const MainPage = (props) => {
                     isLoading={ctx.isLoading}
                     // handleItemClick={handleItemClick}
                   />
-                  {curDay === 0 && (
-                    <Link
-                      to="/summary"
-                      className="main-page__button"
-                      title="Перейти на страницу сводки дня"
-                    >
-                      <span>Сводка дня</span>
-                      <img className="main-page__img" src={arrowIcon} alt="" />
-                    </Link>
-                  )}
+                  <Link
+                    to="/summary"
+                    className={`main-page__button ${
+                      curDay !== 0
+                        ? 'main-page__button main-page__button--hidden'
+                        : ''
+                    }`}
+                    title="Перейти на страницу сводки дня"
+                  >
+                    <span>Сводка дня</span>
+                    <img className="main-page__img" src={arrowIcon} alt="" />
+                  </Link>
                 </div>
               )}
             />

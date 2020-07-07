@@ -188,7 +188,7 @@
         }
 
         .main-page__button {
-            transition: all 300ms ease-in-out, transform 700ms ease-in-out;
+            transition: all 300ms ease-in-out, transform 300ms ease-in-out;
             cursor: pointer;
             font-size: 1.25rem;
             background-color: lighten($cloudy-sky, 10%);
@@ -201,11 +201,20 @@
             margin-top: 15px;
             text-decoration: none;
             color: #333333;
+            transform-origin: center;
+            max-height: 200px;
 
             .main-page__img {
                 width: 30px;
                 margin-left: 5px;
                 // filter: brightness(2);
+            }
+
+            &--hidden {
+                max-height: 0;
+                margin: 0 !important;
+                padding: 0;
+                transform: scale(0);
             }
 
             &:hover {
