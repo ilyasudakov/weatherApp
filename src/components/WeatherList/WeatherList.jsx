@@ -35,9 +35,13 @@ const WeatherList = (props) => {
             >
               <div className="weather-list__day">
                 <span>
-                  {formatDateStringNoYear(
-                    new Date(new Date().setDate(new Date().getDate() + index)),
-                  )}
+                  {index === 0
+                    ? 'Сегодня'
+                    : formatDateStringNoYear(
+                        new Date(
+                          new Date().setDate(new Date().getDate() + index),
+                        ),
+                      )}
                 </span>
                 <span>
                   {formatDateStringDayOfTheWeek(

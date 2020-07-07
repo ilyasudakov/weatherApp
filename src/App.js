@@ -20,7 +20,7 @@ const App = () => {
   const [locationData, setLocationData] = useState({
     lat: 0,
     lon: 0,
-    city: '',
+    city: 'Земля',
   })
 
   useEffect(() => {
