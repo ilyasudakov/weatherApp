@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './MainPage.scss'
 
 import WeatherList from '../WeatherList/WeatherList'
@@ -13,9 +13,10 @@ import {
 import geoIcon from '../../assets/geo-position.svg'
 
 const MainPage = (props) => {
-  //   const weatherContext = useContext(WeatherContext)
+  const [curDay, setCurDay] = useState(0)
+  const [menuIsHidden, setMenuIsHidden] = useState(false)
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, [curDay])
 
   return (
     <WeatherContext.Consumer>
@@ -23,18 +24,24 @@ const MainPage = (props) => {
         <div className="main-page">
           <div
             className={`main-page__wrapper ${
-              ctx.weatherData?.weather?.length > 0
-                ? `main-page__wrapper--${ctx.weatherData.weather[0].main.toLowerCase()}`
+              ctx.forecast.length > 0
+                ? `main-page__wrapper--${ctx.forecast[
+                    curDay
+                  ].weather[0].main.toLowerCase()}`
                 : ''
             } ${ctx.isLoading ? 'main-page__wrapper--hidden' : ''}`}
           >
             <LoadingIndicator isLoading={ctx.isLoading} />
             <div className="main-page__title">
               <div className="main-page__title-item main-page__title-item--date">
-                {formatDateStringNew(new Date())}
+                {formatDateStringNew(
+                  new Date(new Date().setDate(new Date().getDate() + curDay)),
+                )}
               </div>
               <div className="main-page__title-item main-page__title-item--time">
-                {formatDateStringToTime(new Date())}
+                {formatDateStringToTime(
+                  new Date(new Date().setDate(new Date().getDate() + curDay)),
+                )}
               </div>
               <div className="main-page__title-item main-page__title-item--city">
                 <img className="main-page__img" src={geoIcon} alt="" />
@@ -44,21 +51,48 @@ const MainPage = (props) => {
             <img
               className="main-page__weather-icon"
               src={`http://openweathermap.org/img/wn/${
-                ctx.weatherData?.weather?.length > 0
-                  ? ctx.weatherData.weather[0].icon
+                ctx.forecast.length > 0
+                  ? curDay === 0
+                    ? ctx.weatherData.weather && ctx.weatherData.weather[0].icon
+                    : ctx.forecast[curDay].weather[0].icon
                   : ''
               }@4x.png`}
               alt=""
             />
+            <div className="main-page__weather-temperature main-page__weather-temperature--description">
+              {ctx.forecast.length > 0
+                ? curDay === 0
+                  ? ctx.weatherData.weather &&
+                    ctx.weatherData.weather[0].description
+                  : ctx.forecast[curDay].weather[0].description.toLowerCase()
+                : ''}
+            </div>
             <div className="main-page__weather-temperature">
-              {`${Number.parseInt(ctx.weatherData?.main?.temp)}°`}
+              {`${Number.parseInt(
+                ctx.forecast.length > 0
+                  ? curDay === 0
+                    ? ctx.weatherData?.main?.temp
+                    : ctx.forecast[curDay].temp.day
+                  : 0,
+              )}°`}
             </div>
             <div className="main-page__weather-temperature main-page__weather-temperature--message">
               {`Ощущается как ${Number.parseInt(
-                ctx.weatherData?.main?.feels_like,
+                ctx.forecast.length > 0
+                  ? curDay === 0
+                    ? ctx.weatherData?.main?.feels_like
+                    : ctx.forecast[curDay].feels_like.day
+                  : 0,
               )}°`}
             </div>
-            <WeatherList />
+            <WeatherList
+              forecast={ctx.forecast}
+              weatherData={ctx.weatherData}
+              curDay={curDay}
+              setCurDay={setCurDay}
+              isLoading={ctx.isLoading}
+              menuIsHidden={menuIsHidden}
+            />
           </div>
         </div>
       )}

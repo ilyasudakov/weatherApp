@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
-import { getCurrentWeatherByCoordinates } from './utils/API/fetchWeatherData'
+import {
+  getCurrentWeatherByCoordinates,
+  getForecastByCoordinates,
+} from './utils/API/fetchWeatherData'
 import MainPage from './components/MainPage/MainPage'
 
 const WeatherContext = React.createContext()
@@ -11,6 +14,7 @@ const App = () => {
   const [weatherData, setWeatherData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [geoPositionIsLoaded, setGeoPositionIsLoaded] = useState(false)
+  const [forecast, setForecast] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [locationData, setLocationData] = useState({
     lat: 0,
@@ -19,7 +23,7 @@ const App = () => {
   })
 
   useEffect(() => {
-    const getForecast = () => {
+    const getCurrentWeather = () => {
       setIsLoading(true)
       getCurrentWeatherByCoordinates(locationData)
         .then((res) => res.json())
@@ -35,6 +39,23 @@ const App = () => {
         })
         .catch((error) => {
           console.log(error)
+          setIsLoaded(true)
+          setIsLoading(false)
+        })
+    }
+
+    const getForecast = () => {
+      setIsLoading(true)
+      getForecastByCoordinates(locationData)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          setIsLoading(false)
+          setForecast([...res.daily])
+        })
+        .catch((error) => {
+          console.log(error)
+          setIsLoaded(true)
           setIsLoading(false)
         })
     }
@@ -59,6 +80,9 @@ const App = () => {
             return setIsLoading(false)
           },
         )
+      } else {
+        setGeoPositionIsLoaded(true)
+        return setIsLoading(false)
       }
     }
 
@@ -66,6 +90,7 @@ const App = () => {
       getGeoLocation()
     }
     if (!isLoaded && geoPositionIsLoaded && !isLoading) {
+      getCurrentWeather()
       getForecast()
     }
   }, [weatherData, isLoading, geoPositionIsLoaded, isLoaded, locationData])
@@ -77,6 +102,7 @@ const App = () => {
           weatherData: weatherData,
           isLoading: isLoading,
           isLoaded: isLoaded,
+          forecast: forecast,
           locationData: locationData,
         }}
       >

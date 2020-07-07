@@ -15,3 +15,10 @@ export const getCurrentWeatherByCoordinates = (
     method: 'GET',
   })
 }
+
+export const getForecastByCoordinates = (locationData = { lon: 0, lat: 0 }) => {
+  return request({
+    url: `https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/onecall?lon=${locationData.lon}&lat=${locationData.lat}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&exclude=minutely,hourly&units=metric&lang=ru`,
+    method: 'GET',
+  })
+}

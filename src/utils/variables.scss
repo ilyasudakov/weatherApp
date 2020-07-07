@@ -4,4 +4,14 @@ $clear-sky: #ecc046; //F29E85
 $clear-sky__gradient: linear-gradient(169deg, rgba(236, 192, 70, 1) 0%, rgba(242, 158, 133, 1) 100%);
 $cloudy-sky: #40adce; //6CB8D2
 $stormy-sky: #2b526f;
+$stormy-sky: #4a7291;
 $main-page__gradient: linear-gradient(137deg, rgba(72, 56, 144, 1) 0%, rgba(181, 57, 125, 1) 100%);
+
+@function lightness($color, $lightnessMultiplier) {
+    $color: str-replace($color, "var(");
+    $color: str-replace($color, ")");
+    $color-h: var(#{$color + "-h"});
+    $color-s: var(#{$color + "-s"});
+    $color-l: var(#{$color + "-l"});
+    @return hsl($color-h, $color-s, calc(#{$color-l} * #{$lightnessMultiplier}));
+}

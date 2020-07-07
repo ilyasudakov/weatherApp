@@ -50,13 +50,13 @@ const months = {
 }
 
 const weekdays = {
-  0: 'Воскресенье',
-  1: 'Понедельник',
-  2: 'Вторник',
-  3: 'Среда',
-  4: 'Четверг',
-  5: 'Пятница',
-  6: 'Суббота',
+  0: { basic: 'Воскресенье', minimized: 'Вс' },
+  1: { basic: 'Понедельник', minimized: 'Пн' },
+  2: { basic: 'Вторник', minimized: 'Вт' },
+  3: { basic: 'Среда', minimized: 'Ср' },
+  4: { basic: 'Четверг', minimized: 'Чт' },
+  5: { basic: 'Пятница', minimized: 'Пт' },
+  6: { basic: 'Суббота', minimized: 'Сб' },
 }
 
 //Получение строки типа 'дд.мм.ГГГГ' из объекта Date
@@ -129,9 +129,17 @@ export const formatDateStringToTime = (dateString) => {
 export const formatDateStringNew = (dateString = new Date()) => {
   // console.log(dateString);
   const temp = new Date(dateString)
-  return `${weekdays[temp.getDay()]}, ${temp.getDate()} ${months[
+  return `${weekdays[temp.getDay()].basic}, ${temp.getDate()} ${months[
     temp.getMonth()
   ].inclined.toLowerCase()}`
+}
+
+export const formatDateStringDayOfTheWeek = (
+  dateString = new Date(),
+  isMinimized = false,
+) => {
+  const temp = new Date(dateString)
+  return weekdays[temp.getDay()][isMinimized ? 'minimized' : 'basic']
 }
 
 export const fahrenheitToCelsius = (fahrenheit) => {
