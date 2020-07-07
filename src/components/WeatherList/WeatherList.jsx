@@ -1,14 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './WeatherList.scss'
 
-import WeatherContext from '../../App'
 import {
   formatDateStringDayOfTheWeek,
   formatDateStringNoYear,
 } from '../../utils/functions'
 
 const WeatherList = (props) => {
-  const weatherContext = useContext(WeatherContext)
 
   return (
     <div

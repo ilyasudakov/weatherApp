@@ -89,6 +89,14 @@
         }
         &--snow {
             background-color: #999999;
+
+            .main-page__button {
+                background-color: lighten(#999999, 10%) !important;
+
+                &:hover {
+                    background-color: lighten(#999999, 15%) !important;
+                }
+            }
         }
 
         .main-page__minimize-field {

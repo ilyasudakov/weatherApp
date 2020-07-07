@@ -8,7 +8,6 @@ import LoadingIndicator from '../LoadingIndicator/LoadingIndicator'
 import {
   formatDateStringToTime,
   formatDateStringNew,
-  fahrenheitToCelsius,
 } from '../../utils/functions'
 
 import geoIcon from '../../assets/geo-position.svg'
@@ -18,9 +17,9 @@ import DaySummaryPage from '../DaySummaryPage/DaySummaryPage'
 
 const MainPage = (props) => {
   const [curDay, setCurDay] = useState(0)
-  const [menuIsHidden, setMenuIsHidden] = useState(false)
+  // const [menuIsHidden, setMenuIsHidden] = useState(false)
 
-  const handleItemClick = () => {}
+  // const handleItemClick = () => {}
 
   useEffect(() => {}, [curDay])
 
@@ -112,24 +111,32 @@ const MainPage = (props) => {
                     curDay={curDay}
                     setCurDay={setCurDay}
                     isLoading={ctx.isLoading}
-                    menuIsHidden={menuIsHidden}
                     // handleItemClick={handleItemClick}
                   />
-                  <Link
-                    to="/summary"
-                    className="main-page__button"
-                    title="Перейти на страницу сводки дня"
-                  >
-                    <span>Сводка дня</span>
-                    <img className="main-page__img" src={arrowIcon} alt="" />
-                  </Link>
+                  {curDay === 0 && (
+                    <Link
+                      to="/summary"
+                      className="main-page__button"
+                      title="Перейти на страницу сводки дня"
+                    >
+                      <span>Сводка дня</span>
+                      <img className="main-page__img" src={arrowIcon} alt="" />
+                    </Link>
+                  )}
                 </div>
               )}
             />
             <Route
               exact
               path="/summary"
-              render={(props) => <DaySummaryPage forecast={ctx.forecastDay} />}
+              render={(props) => (
+                <DaySummaryPage
+                  forecast={ctx.forecastDay}
+                  curDay={curDay}
+                  curWeather={ctx.weatherData}
+                  isLoading={ctx.isLoading}
+                />
+              )}
             />
           </BrowserRouter>
         </div>
