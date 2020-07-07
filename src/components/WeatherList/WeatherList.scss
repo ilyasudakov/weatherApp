@@ -26,6 +26,10 @@
 
         .weather-list__item {
             color: #222222;
+
+            .weather-list__temperature--night {
+                color: #888888 !important;
+            }
         }
     }
     &--clouds {
@@ -50,7 +54,7 @@
             color: #eeeeee;
 
             .weather-list__temperature--night {
-                color: #bbbbbb !important;
+                color: #cccccc !important;
             }
         }
     }
@@ -142,15 +146,15 @@
             border-radius: 15px;
             box-shadow: none;
             background-color: transparent;
-            width: calc(100% + 30px); //test
-            max-width: 280px;
+            width: calc(100% + 30px) !important; //test
+            max-width: 280px !important;
 
             .weather-list__wrapper {
                 flex-direction: row;
                 overflow-x: auto;
                 // max-width: 240px;
-                max-width: 280px; //test
-                width: 100%;
+                max-width: 280px !important; //test
+                width: 100% !important;
                 padding: 5px 0;
                 justify-content: flex-start;
                 // margin-right: 15px;
@@ -182,7 +186,7 @@
                     &:nth-child(8)::after {
                         content: "";
                         position: absolute;
-                        right: -15px;
+                        right: -13px;
                         width: 40px;
                         height: 100%;
                         // background: red;
