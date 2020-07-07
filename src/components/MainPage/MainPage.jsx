@@ -24,7 +24,7 @@ const MainPage = (props) => {
         <div className="main-page">
           <div
             className={`main-page__wrapper ${
-              ctx.forecast.length > 0
+              ctx.forecast.length > 0 && !ctx.isLoading
                 ? `main-page__wrapper--${ctx.forecast[
                     curDay
                   ].weather[0].main.toLowerCase()}`

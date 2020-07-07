@@ -51,15 +51,15 @@ const App = () => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res)
-          setIsLoaded(true)
+          setForecastIsLoaded(true)
           setIsLoading(false)
           setForecast([...res.daily])
-          setForecastIsLoaded(true)
+          // setIsLoaded(true)
         })
         .catch((error) => {
           console.log(error)
           setForecastIsLoaded(true)
-          setIsLoaded(true)
+          // setIsLoaded(true)
           setIsLoading(false)
         })
     }
@@ -94,7 +94,7 @@ const App = () => {
     if (!geoPositionIsLoaded && !isLoaded) {
       getGeoLocation()
     }
-    if (!isLoaded && geoPositionIsLoaded && !isLoading) {
+    if (!isLoaded && !forecastIsLoaded && geoPositionIsLoaded && !isLoading) {
       getForecast()
       getCurrentWeather()
     }
@@ -112,7 +112,7 @@ const App = () => {
       <WeatherContext.Provider
         value={{
           weatherData: weatherData,
-          isLoading: !forecastIsLoaded,
+          isLoading: !forecastIsLoaded || !isLoaded,
           isLoaded: isLoaded,
           forecast: forecast,
           locationData: locationData,
