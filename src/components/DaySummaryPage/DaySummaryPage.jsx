@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import './DaySummaryPage.scss'
 
@@ -6,6 +6,12 @@ import { formatDateStringNew } from '../../utils/functions'
 import arrowIcon from '../../assets/arrow-back.svg'
 
 const DaySummaryPage = (props) => {
+  const [showGraph, setShowGraph] = useState(
+    (window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth) >= 768,
+  )
+
   useEffect(() => {
     if (props.isLoading) {
       props.history.push('/')
@@ -75,9 +81,10 @@ const DaySummaryPage = (props) => {
             className="day-summary-page__button"
             onClick={(event) => {
               event.preventDefault()
+              setShowGraph(!showGraph)
             }}
           >
-            <span>Открыть график</span>
+            <span>{`${showGraph ? 'Скрыть' : 'Открыть'} график`}</span>
             {/* <img className="day-summary-page__img" src={arrowIcon} alt="" /> */}
           </button>
         )}
