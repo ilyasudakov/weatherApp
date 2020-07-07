@@ -101,11 +101,12 @@
                 &--night {
                     margin-top: 0;
                     color: #444444;
+                    transition: 300ms ease-in-out;
                 }
             }
 
             &--active {
-                background-color: rgba(#eeeeee, 0.3);
+                background-color: rgba(#eeeeee, 0.2);
             }
         }
     }
@@ -182,6 +183,7 @@
                             .weather-list__temperature {
                                 // margin-top: -5px;
                                 // width: fit-content;
+                                font-size: 0.9rem;
 
                                 &--night {
                                     // margin-left: auto;

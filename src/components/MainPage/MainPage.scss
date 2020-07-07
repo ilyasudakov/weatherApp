@@ -186,8 +186,11 @@
 
                 .main-page__title {
                     width: 100%;
+                    max-width: 250px;
+
                     .main-page__title-item--date {
                         text-align: center;
+                        font-size: 1.3rem;
                         width: calc(100% - 20px);
                     }
                 }

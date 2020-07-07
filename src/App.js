@@ -52,9 +52,9 @@ const App = () => {
         .then((res) => {
           console.log(res)
           setIsLoaded(true)
-          setForecastIsLoaded(true)
           setIsLoading(false)
           setForecast([...res.daily])
+          setForecastIsLoaded(true)
         })
         .catch((error) => {
           console.log(error)
@@ -85,10 +85,10 @@ const App = () => {
             return setIsLoading(false)
           },
         )
-      } else {
-        setGeoPositionIsLoaded(true)
-        return setIsLoading(false)
       }
+
+      setGeoPositionIsLoaded(true)
+      return setIsLoading(false)
     }
 
     if (!geoPositionIsLoaded && !isLoaded) {
@@ -98,7 +98,14 @@ const App = () => {
       getForecast()
       getCurrentWeather()
     }
-  }, [weatherData, isLoading, geoPositionIsLoaded, isLoaded, locationData])
+  }, [
+    weatherData,
+    isLoading,
+    geoPositionIsLoaded,
+    isLoaded,
+    locationData,
+    forecastIsLoaded,
+  ])
 
   return (
     <div className="app">
