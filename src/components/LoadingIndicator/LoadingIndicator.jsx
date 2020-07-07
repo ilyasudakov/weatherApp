@@ -16,6 +16,9 @@ const LoadingIndicator = (props) => {
         <div></div>
         <div></div>
       </div>
+      <div className="loading-indicator__message">
+        {props.message || 'Идет загрузка...'}
+      </div>
     </div>
   )
 }

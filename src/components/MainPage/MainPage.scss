@@ -71,7 +71,8 @@
             }
 
             .main-page__weather-temperature--message,
-            .main-page__weather-temperature--description {
+            .main-page__weather-temperature--description,
+            .main-page__button {
                 color: #dddddd !important;
             }
             .main-page__button {
@@ -190,6 +191,8 @@
             justify-content: center;
             align-items: center;
             margin-top: 15px;
+            text-decoration: none;
+            color: #333333;
 
             .main-page__img {
                 width: 30px;

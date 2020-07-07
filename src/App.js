@@ -14,7 +14,8 @@ const App = () => {
   const [weatherData, setWeatherData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [geoPositionIsLoaded, setGeoPositionIsLoaded] = useState(false)
-  const [forecast, setForecast] = useState([])
+  const [forecastWeek, setForecastWeek] = useState([])
+  const [forecastDay, setForecastDay] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [forecastIsLoaded, setForecastIsLoaded] = useState(false)
   const [locationData, setLocationData] = useState({
@@ -53,7 +54,8 @@ const App = () => {
           console.log(res)
           setForecastIsLoaded(true)
           setIsLoading(false)
-          setForecast([...res.daily])
+          setForecastWeek([...res.daily])
+          setForecastDay([...res.hourly])
           // setIsLoaded(true)
         })
         .catch((error) => {
@@ -114,7 +116,8 @@ const App = () => {
           weatherData: weatherData,
           isLoading: !forecastIsLoaded || !isLoaded,
           isLoaded: isLoaded,
-          forecast: forecast,
+          forecast: forecastWeek,
+          forecastDay: forecastDay,
           locationData: locationData,
           // forecastIsLoaded: forecastIsLoaded
         }}
