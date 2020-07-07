@@ -48,9 +48,16 @@ const WeatherList = (props) => {
                   }.png`}
                   alt=""
                 />
-                <div className="weather-list__temperature">{`${Number.parseInt(
-                  index === 0 ? props.weatherData?.main?.temp : day.temp.day,
-                )}°`}</div>
+                <div className="weather-list__dates">
+                  <div className="weather-list__temperature">{`${Number.parseInt(
+                    index === 0 ? props.weatherData?.main?.temp : day.temp.day,
+                  )}°`}</div>
+                  <div className="weather-list__temperature weather-list__temperature--night">{`${Number.parseInt(
+                    index === 0
+                      ? props.weatherData?.main?.temp
+                      : day.temp.night,
+                  )}°`}</div>
+                </div>
               </div>
             </div>
           )

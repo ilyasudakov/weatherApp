@@ -34,6 +34,10 @@
 
         .weather-list__item {
             color: #111111;
+
+            .weather-list__temperature--night {
+                color: #555555 !important;
+            }
         }
     }
     &--thunderstorm,
@@ -44,6 +48,10 @@
 
         .weather-list__item {
             color: #eeeeee;
+
+            .weather-list__temperature--night {
+                color: #bbbbbb !important;
+            }
         }
     }
     &--snow {
@@ -57,7 +65,7 @@
         padding: 5px;
 
         .weather-list__item {
-            padding: 0px 25px;
+            padding: 0px 10px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -78,10 +86,22 @@
                 flex-direction: row;
                 padding: 5px 5px;
                 // align-items: flex-start;
+
+                .weather-list__dates {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    padding: 5px 0;
+                }
             }
 
             .weather-list__temperature {
-                margin-top: 5px;
+                // margin-top: 5px;
+
+                &--night {
+                    margin-top: 0;
+                    color: #444444;
+                }
             }
 
             &--active {
@@ -99,8 +119,16 @@
 
     @media (min-width: 400px) {
         & {
+            width: 100%;
+            max-width: 270px !important;
             .weather-list__wrapper {
-                max-width: 300px !important;
+                width: 100%;
+                max-width: 260px !important;
+
+                .weather-list__item {
+                    width: calc(100% - 20px);
+                    // max-width: 225px;
+                }
             }
         }
     }
@@ -135,11 +163,30 @@
                     }
 
                     .weather-list__info {
-                        flex-direction: column;
-                        padding-top: 0;
+                        // flex-direction: column;
+                        // padding-top: 0;
+                        flex-wrap: wrap;
+                        // max-width: 60px;
 
-                        .weather-list__temperature {
-                            margin-top: -5px;
+                        .weather-list__weather-icon {
+                            // width: 100%;
+                            width: 50px;
+                            // margin: 0 auto;
+                        }
+
+                        .weather-list__dates {
+                            flex-direction: row;
+                            justify-content: space-between;
+                            width: 100%;
+                            margin-top: -10px;
+                            .weather-list__temperature {
+                                // margin-top: -5px;
+                                // width: fit-content;
+
+                                &--night {
+                                    // margin-left: auto;
+                                }
+                            }
                         }
                     }
                 }

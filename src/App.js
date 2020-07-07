@@ -16,6 +16,7 @@ const App = () => {
   const [geoPositionIsLoaded, setGeoPositionIsLoaded] = useState(false)
   const [forecast, setForecast] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
+  const [forecastIsLoaded, setForecastIsLoaded] = useState(false)
   const [locationData, setLocationData] = useState({
     lat: 0,
     lon: 0,
@@ -35,12 +36,12 @@ const App = () => {
             ...locationData,
             city: res.name,
           })
-          setIsLoading(false)
+          // setIsLoading(false)
         })
         .catch((error) => {
           console.log(error)
           setIsLoaded(true)
-          setIsLoading(false)
+          // setIsLoading(false)
         })
     }
 
@@ -50,11 +51,14 @@ const App = () => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res)
+          setIsLoaded(true)
+          setForecastIsLoaded(true)
           setIsLoading(false)
           setForecast([...res.daily])
         })
         .catch((error) => {
           console.log(error)
+          setForecastIsLoaded(true)
           setIsLoaded(true)
           setIsLoading(false)
         })
@@ -76,6 +80,7 @@ const App = () => {
             return setGeoPositionIsLoaded(true)
           },
           function (error) {
+            console.log(error)
             setGeoPositionIsLoaded(true)
             return setIsLoading(false)
           },
@@ -90,8 +95,8 @@ const App = () => {
       getGeoLocation()
     }
     if (!isLoaded && geoPositionIsLoaded && !isLoading) {
-      getCurrentWeather()
       getForecast()
+      getCurrentWeather()
     }
   }, [weatherData, isLoading, geoPositionIsLoaded, isLoaded, locationData])
 
@@ -100,10 +105,11 @@ const App = () => {
       <WeatherContext.Provider
         value={{
           weatherData: weatherData,
-          isLoading: isLoading,
+          isLoading: !forecastIsLoaded,
           isLoaded: isLoaded,
           forecast: forecast,
           locationData: locationData,
+          // forecastIsLoaded: forecastIsLoaded
         }}
       >
         <MainPage />
