@@ -11,6 +11,7 @@ import {
 } from '../../utils/functions'
 
 import geoIcon from '../../assets/geo-position.svg'
+import arrowIcon from '../../assets/arrow-right.svg'
 
 const MainPage = (props) => {
   const [curDay, setCurDay] = useState(0)
@@ -96,6 +97,13 @@ const MainPage = (props) => {
               menuIsHidden={menuIsHidden}
               // handleItemClick={handleItemClick}
             />
+            <div
+              className="main-page__button"
+              title="Перейти на страницу сводки дня"
+            >
+              <span>Сводка дня</span>
+              <img className="main-page__img" src={arrowIcon} alt="" />
+            </div>
           </div>
         </div>
       )}
