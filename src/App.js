@@ -1,26 +1,115 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import './App.css'
 
-function App() {
+import {
+  getCurrentWeatherByCoordinates,
+  getForecastByCoordinates,
+} from './utils/API/fetchWeatherData'
+import MainPage from './components/MainPage/MainPage'
+
+const WeatherContext = React.createContext()
+export default WeatherContext
+
+const App = () => {
+  const [weatherData, setWeatherData] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
+  const [geoPositionIsLoaded, setGeoPositionIsLoaded] = useState(false)
+  const [forecast, setForecast] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [locationData, setLocationData] = useState({
+    lat: 0,
+    lon: 0,
+    city: '',
+  })
+
+  useEffect(() => {
+    const getCurrentWeather = () => {
+      setIsLoading(true)
+      getCurrentWeatherByCoordinates(locationData)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          setIsLoaded(true)
+          setWeatherData({ ...res })
+          setLocationData({
+            ...locationData,
+            city: res.name,
+          })
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          console.log(error)
+          setIsLoaded(true)
+          setIsLoading(false)
+        })
+    }
+
+    const getForecast = () => {
+      setIsLoading(true)
+      getForecastByCoordinates(locationData)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+          setIsLoading(false)
+          setForecast([...res.daily])
+        })
+        .catch((error) => {
+          console.log(error)
+          setIsLoaded(true)
+          setIsLoading(false)
+        })
+    }
+
+    const getGeoLocation = async () => {
+      setIsLoading(true)
+      if ('geolocation' in navigator) {
+        return navigator.geolocation.getCurrentPosition(
+          function (position) {
+            console.log('Latitude is :', position.coords.latitude)
+            console.log('Longitude is :', position.coords.longitude)
+            setLocationData({
+              ...locationData,
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            })
+            setIsLoading(false)
+            return setGeoPositionIsLoaded(true)
+          },
+          function (error) {
+            setGeoPositionIsLoaded(true)
+            return setIsLoading(false)
+          },
+        )
+      } else {
+        setGeoPositionIsLoaded(true)
+        return setIsLoading(false)
+      }
+    }
+
+    if (!geoPositionIsLoaded && !isLoaded) {
+      getGeoLocation()
+    }
+    if (!isLoaded && geoPositionIsLoaded && !isLoading) {
+      getCurrentWeather()
+      getForecast()
+    }
+  }, [weatherData, isLoading, geoPositionIsLoaded, isLoaded, locationData])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <WeatherContext.Provider
+        value={{
+          weatherData: weatherData,
+          isLoading: isLoading,
+          isLoaded: isLoaded,
+          forecast: forecast,
+          locationData: locationData,
+        }}
+      >
+        <MainPage />
+      </WeatherContext.Provider>
     </div>
-  );
+  )
 }
 
-export default App;
+export { App }

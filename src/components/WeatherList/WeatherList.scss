@@ -1,0 +1,149 @@
+@import "../../utils/variables.scss";
+
+.weather-list {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    height: 100%;
+    background-color: #fff;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    --curColor: lighten($clear-sky, 10%);
+    transition: all 300ms ease-in-out, opacity 500ms ease-in-out;
+    opacity: 1;
+    box-shadow: inset -26px 0px 25px -30px rgba(0, 0, 0, 0.75);
+
+    // darken ~ mix with black function
+    @function mixb($variable, $opacity) {
+        @return unquote(
+            "linear-gradient(to top,rgba(0, 0, 0," + $opacity + "),rgba(0, 0, 0," + $opacity + "))" + $variable
+        );
+    }
+
+    &--clear {
+        background-color: lighten($clear-sky, 10%);
+        --curColor: lighten($clear-sky, 10%);
+
+        .weather-list__item {
+            color: #222222;
+        }
+    }
+    &--clouds {
+        background-color: lighten($cloudy-sky, 10%);
+        --curColor: lighten($cloudy-sky, 10%);
+
+        .weather-list__item {
+            color: #111111;
+        }
+    }
+    &--thunderstorm,
+    &--drizzle,
+    &--rain {
+        background-color: lighten($stormy-sky, 10%);
+        --curColor: lighten($stormy-sky, 10%);
+
+        .weather-list__item {
+            color: #eeeeee;
+        }
+    }
+    &--snow {
+        background-color: lighten(#999999, 10%);
+        --curColor: lighten(#999999-sky, 10%);
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+
+        .weather-list__item {
+            padding: 0px 25px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 100ms ease-in-out, color 500ms ease-in-out;
+            // margin-bottom: -10px;
+
+            .weather-list__day {
+                padding: 0 5px;
+                padding-right: 25px;
+            }
+
+            .weather-list__info {
+                display: flex;
+                flex-direction: row;
+                padding: 5px 5px;
+                // align-items: flex-start;
+            }
+
+            .weather-list__temperature {
+                margin-top: 5px;
+            }
+
+            &--active {
+                background-color: rgba(#eeeeee, 0.3);
+            }
+        }
+    }
+
+    &--hidden {
+        // z-index: -1;
+        right: 0;
+        opacity: 0;
+        // transform: scaleX(0);
+    }
+
+    @media (min-width: 400px) {
+        & {
+            .weather-list__wrapper {
+                max-width: 300px !important;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        & {
+            position: relative;
+            right: auto;
+            margin-top: 10px;
+            border-radius: 15px;
+            box-shadow: none;
+
+            background-color: transparent;
+
+            .weather-list__wrapper {
+                flex-direction: row;
+                max-width: 240px;
+                overflow-x: auto;
+
+                .weather-list__item {
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+
+                    padding: 5px;
+
+                    .weather-list__day {
+                        width: 100%;
+                        padding: 5px 0;
+                        font-size: 1.25rem;
+                        padding-bottom: 0;
+                    }
+
+                    .weather-list__info {
+                        flex-direction: column;
+                        padding-top: 0;
+
+                        .weather-list__temperature {
+                            margin-top: -5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
