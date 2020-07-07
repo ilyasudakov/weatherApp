@@ -11,7 +11,8 @@ import {
 } from '../../utils/functions'
 
 import geoIcon from '../../assets/geo-position.svg'
-import arrowIcon from '../../assets/arrow-right.svg'
+// import arrowIcon from '../../assets/arrow-right.svg'
+import arrowIcon from '../../assets/external-link.svg'
 
 const MainPage = (props) => {
   const [curDay, setCurDay] = useState(0)

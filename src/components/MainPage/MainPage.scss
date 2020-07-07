@@ -41,6 +41,10 @@
 
             .main-page__button {
                 background-color: lighten($clear-sky, 10%) !important;
+
+                &:hover {
+                    background-color: lighten($clear-sky, 15%) !important;
+                }
             }
         }
         &--clouds {
@@ -75,6 +79,10 @@
 
                 .main-page__img {
                     filter: brightness(3);
+                }
+
+                &:hover {
+                    background-color: lighten($stormy-sky, 15%) !important;
                 }
             }
         }
@@ -123,7 +131,7 @@
                     font-size: 2rem;
                 }
                 &--city {
-                    font-size:1.5rem;
+                    font-size: 1.5rem;
                     cursor: pointer;
 
                     .main-page__img {
@@ -187,6 +195,11 @@
                 width: 30px;
                 margin-left: 5px;
                 // filter: brightness(2);
+            }
+
+            &:hover {
+                background-color: lighten($cloudy-sky, 15%);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.15);
             }
         }
 
