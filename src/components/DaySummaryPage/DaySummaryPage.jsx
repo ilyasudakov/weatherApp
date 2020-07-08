@@ -28,7 +28,7 @@ const DaySummaryPage = (props) => {
   )
 
   useEffect(() => {
-    if (props.isLoading) {
+    if (props.isLoading || props.loadingError !== '') {
       props.history.push('/')
     }
     console.log(props.forecast, props.curWeather)

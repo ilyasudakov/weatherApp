@@ -18,6 +18,7 @@ const App = () => {
   const [forecastDay, setForecastDay] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [forecastIsLoaded, setForecastIsLoaded] = useState(false)
+  const [loadingError, setLoadingError] = useState('')
   const [locationData, setLocationData] = useState({
     lat: 0,
     lon: 0,
@@ -41,6 +42,7 @@ const App = () => {
         })
         .catch((error) => {
           console.log(`Error in getCurrentWeather(): ${error}`)
+          setLoadingError(`Error in getCurrentWeather(): ${error}`)
           setIsLoaded(true)
           // setIsLoading(false)
         })
@@ -59,7 +61,7 @@ const App = () => {
           // setIsLoaded(true)
         })
         .catch((error) => {
-          console.log(error)
+          setLoadingError(`Error in getForecast(): ${error}`)
           console.log(`Error in getForecast(): ${error}`)
           setForecastIsLoaded(true)
           // setIsLoaded(true)
@@ -120,6 +122,7 @@ const App = () => {
           forecast: forecastWeek,
           forecastDay: forecastDay,
           locationData: locationData,
+          loadingError: loadingError,
           // forecastIsLoaded: forecastIsLoaded
         }}
       >

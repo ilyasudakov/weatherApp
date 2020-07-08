@@ -1,5 +1,21 @@
-@import '../../utils/variables.scss';
+@import "../../utils/variables.scss";
 
 .error-message {
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% + 0px);
+    min-height: calc(100% + 0px);
+    background-color: rgba($color: #e94a4a, $alpha: 0.4);
+
+    &__img {
+        width: 125px;
+    }
+    &__message {
+        font-size: 1.25rem;
+    }
 }
