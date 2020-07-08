@@ -7,11 +7,12 @@ import {
 } from '../../utils/functions'
 
 const WeatherList = (props) => {
-
   return (
     <div
       className={`weather-list ${
-        props.forecast[props.curDay]?.weather
+        props.curDay === 0 && props.weatherData?.weather !== undefined
+          ? `weather-list--${props.weatherData.weather[0].main.toLowerCase()}`
+          : props.forecast[props.curDay]?.weather
           ? `weather-list--${props.forecast[
               props.curDay
             ].weather[0].main.toLowerCase()}`
