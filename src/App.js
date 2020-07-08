@@ -40,7 +40,7 @@ const App = () => {
           // setIsLoading(false)
         })
         .catch((error) => {
-          console.log(error)
+          console.log(`Error in getCurrentWeather(): ${error}`)
           setIsLoaded(true)
           // setIsLoading(false)
         })
@@ -60,6 +60,7 @@ const App = () => {
         })
         .catch((error) => {
           console.log(error)
+          console.log(`Error in getForecast(): ${error}`)
           setForecastIsLoaded(true)
           // setIsLoaded(true)
           setIsLoading(false)

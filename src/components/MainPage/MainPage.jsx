@@ -32,102 +32,14 @@ const MainPage = (props) => {
               exact
               path="/"
               render={(props) => (
-                <div
-                  className={`main-page__wrapper ${
-                    curDay === 0 && ctx.weatherData?.weather !== undefined
-                      ? `main-page__wrapper--${ctx.weatherData.weather[0].main.toLowerCase()}`
-                      : ctx.forecast.length > 0 && !ctx.isLoading
-                      ? `main-page__wrapper--${ctx.forecast[
-                          curDay
-                        ].weather[0].main.toLowerCase()}`
-                      : ''
-                  } ${ctx.isLoading ? 'main-page__wrapper--hidden' : ''}`}
-                >
-                  <LoadingIndicator
-                    isLoading={ctx.isLoading}
-                    message="Ожидание ответа от OpenWeather API..."
-                  />
-                  <div className="main-page__title">
-                    <div className="main-page__title-item main-page__title-item--date">
-                      {formatDateStringNew(
-                        new Date(
-                          new Date().setDate(new Date().getDate() + curDay),
-                        ),
-                      )}
-                    </div>
-                    <div className="main-page__title-item main-page__title-item--time">
-                      {formatDateStringToTime(
-                        new Date(
-                          new Date().setDate(new Date().getDate() + curDay),
-                        ),
-                      )}
-                    </div>
-                    <div className="main-page__title-item main-page__title-item--city">
-                      <img className="main-page__img" src={geoIcon} alt="" />
-                      <span>{ctx.locationData.city}</span>
-                    </div>
-                  </div>
-                  <img
-                    className="main-page__weather-icon"
-                    src={`http://openweathermap.org/img/wn/${
-                      ctx.forecast.length > 0
-                        ? curDay === 0
-                          ? ctx.weatherData.weather &&
-                            ctx.weatherData.weather[0].icon
-                          : ctx.forecast[curDay].weather[0].icon
-                        : ''
-                    }@4x.png`}
-                    alt=""
-                  />
-                  <div className="main-page__weather-temperature main-page__weather-temperature--description">
-                    {ctx.forecast.length > 0
-                      ? curDay === 0
-                        ? ctx.weatherData.weather &&
-                          ctx.weatherData.weather[0].description
-                        : ctx.forecast[
-                            curDay
-                          ].weather[0].description.toLowerCase()
-                      : ''}
-                  </div>
-                  <div className="main-page__weather-temperature">
-                    {`${Number.parseInt(
-                      ctx.forecast.length > 0
-                        ? curDay === 0
-                          ? ctx.weatherData?.main?.temp
-                          : ctx.forecast[curDay].temp.day
-                        : 0,
-                    )}°`}
-                  </div>
-                  <div className="main-page__weather-temperature main-page__weather-temperature--message">
-                    {`Ощущается как ${Number.parseInt(
-                      ctx.forecast.length > 0
-                        ? curDay === 0
-                          ? ctx.weatherData?.main?.feels_like
-                          : ctx.forecast[curDay].feels_like.day
-                        : 0,
-                    )}°`}
-                  </div>
-                  <WeatherList
-                    forecast={ctx.forecast}
-                    weatherData={ctx.weatherData}
-                    curDay={curDay}
-                    setCurDay={setCurDay}
-                    isLoading={ctx.isLoading}
-                    // handleItemClick={handleItemClick}
-                  />
-                  <Link
-                    to="/summary"
-                    className={`main-page__button ${
-                      curDay !== 0
-                        ? 'main-page__button main-page__button--hidden'
-                        : ''
-                    }`}
-                    title="Перейти на страницу сводки дня"
-                  >
-                    <span>Сводка дня</span>
-                    <img className="main-page__img" src={arrowIcon} alt="" />
-                  </Link>
-                </div>
+                <GeneralPanel
+                  forecast={ctx.forecastDay}
+                  curDay={curDay}
+                  curWeather={ctx.weatherData}
+                  isLoading={ctx.isLoading}
+                  setCurDay={setCurDay}
+                  {...ctx}
+                />
               )}
             />
             <Route
@@ -150,3 +62,97 @@ const MainPage = (props) => {
 }
 
 export default MainPage
+
+const GeneralPanel = (props) => {
+  return (
+    <div
+      className={`main-page__wrapper ${
+        props.curDay === 0 && props.weatherData?.weather !== undefined
+          ? `main-page__wrapper--${props.weatherData.weather[0].main.toLowerCase()}`
+          : props.forecast.length > 0 && !props.isLoading
+          ? `main-page__wrapper--${props.forecast[
+              props.curDay
+            ].weather[0].main.toLowerCase()}`
+          : ''
+      } ${props.isLoading ? 'main-page__wrapper--hidden' : ''}`}
+    >
+      <LoadingIndicator
+        isLoading={props.isLoading}
+        message="Ожидание ответа от OpenWeather API..."
+      />
+      <div className="main-page__title">
+        <div className="main-page__title-item main-page__title-item--date">
+          {formatDateStringNew(
+            new Date(new Date().setDate(new Date().getDate() + props.curDay)),
+          )}
+        </div>
+        <div className="main-page__title-item main-page__title-item--time">
+          {formatDateStringToTime(
+            new Date(new Date().setDate(new Date().getDate() + props.curDay)),
+          )}
+        </div>
+        <div className="main-page__title-item main-page__title-item--city">
+          <img className="main-page__img" src={geoIcon} alt="" />
+          <span>{props.locationData.city}</span>
+        </div>
+      </div>
+      <img
+        className="main-page__weather-icon"
+        src={`http://openweathermap.org/img/wn/${
+          props.forecast.length > 0
+            ? props.curDay === 0
+              ? props.weatherData.weather && props.weatherData.weather[0].icon
+              : props.forecast[props.curDay].weather[0].icon
+            : ''
+        }@4x.png`}
+        alt=""
+      />
+      <div className="main-page__weather-temperature main-page__weather-temperature--description">
+        {props.forecast.length > 0
+          ? props.curDay === 0
+            ? props.weatherData.weather &&
+              props.weatherData.weather[0].description
+            : props.forecast[props.curDay].weather[0].description.toLowerCase()
+          : ''}
+      </div>
+      <div className="main-page__weather-temperature">
+        {`${Number.parseInt(
+          props.forecast.length > 0
+            ? props.curDay === 0
+              ? props.weatherData?.main?.temp
+              : props.forecast[props.curDay].temp.day
+            : 0,
+        )}°`}
+      </div>
+      <div className="main-page__weather-temperature main-page__weather-temperature--message">
+        {`Ощущается как ${Number.parseInt(
+          props.forecast.length > 0
+            ? props.curDay === 0
+              ? props.weatherData?.main?.feels_like
+              : props.forecast[props.curDay].feels_like.day
+            : 0,
+        )}°`}
+      </div>
+      <WeatherList
+        forecast={props.forecast}
+        weatherData={props.weatherData}
+        curDay={props.curDay}
+        setCurDay={props.setCurDay}
+        isLoading={props.isLoading}
+        // handleItemClick={handleItemClick}
+      />
+      <Link
+        to="/summary"
+        className={`main-page__button ${
+          props.curDay !== 0
+            ? 'main-page__button main-page__button--hidden'
+            : ''
+        }`}
+        title="Перейти на страницу сводки дня"
+      >
+        <span>Сводка дня</span>
+        <img className="main-page__img" src={arrowIcon} alt="" />
+      </Link>
+    </div>
+  )
+}
