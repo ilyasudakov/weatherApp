@@ -70,6 +70,11 @@ const DaySummaryPage = (props) => {
                 ).getHours()}:00`,
               })
             })}
+            curWeather={
+              props.curWeather.weather
+                ? props.curWeather.weather[0].main.toLowerCase()
+                : 'clear'
+            }
           />
         </div>
         <div className="day-summary-page__general">
@@ -179,12 +184,21 @@ export default withRouter(DaySummaryPage)
 
 const GraphPanel = (props) => {
   const colors = {
-    clear: '#ecc046',
+    clear: '#e8b11c',
     clouds: '#6dc4de',
-    drizzle: '#4a7291',
-    rain: '#4a7291',
-    thunderstorm: '#4a7291',
-    snow: '#999999',
+    drizzle: '#0a74c7',
+    rain: '#0a74c7',
+    thunderstorm: '#0a74c7',
+    snow: '#aaaaaa',
+  }
+
+  const fontColors = {
+    clear: '#222222',
+    clouds: '#222222',
+    drizzle: '#eeeeee',
+    rain: '#eeeeee',
+    thunderstorm: '#eeeeee',
+    snow: '#222222',
   }
 
   const CustomBar = (props) => {
@@ -211,8 +225,22 @@ const GraphPanel = (props) => {
         data={props.forecast}
         layout="vertical"
       >
-        <YAxis type="category" dataKey="label" />
-        <XAxis type="number" dataKey="temperature" />
+        <YAxis
+          type="category"
+          dataKey="label"
+          tick={{
+            fill: fontColors[props.curWeather],
+          }}
+          stroke={fontColors[props.curWeather]}
+        />
+        <XAxis
+          type="number"
+          dataKey="temperature"
+          tick={{
+            fill: fontColors[props.curWeather],
+          }}
+          stroke={fontColors[props.curWeather]}
+        />
         {/* <Tooltip /> */}
         <Bar shape={CustomBar} dataKey="temperature" fillOpacity="0.5" />
       </BarChart>
