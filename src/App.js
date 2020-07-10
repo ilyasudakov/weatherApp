@@ -14,12 +14,15 @@ const App = () => {
   const [weatherData, setWeatherData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [geoPositionIsLoaded, setGeoPositionIsLoaded] = useState(false)
-  const [forecast, setForecast] = useState([])
+  const [forecastWeek, setForecastWeek] = useState([])
+  const [forecastDay, setForecastDay] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
+  const [forecastIsLoaded, setForecastIsLoaded] = useState(false)
+  const [loadingError, setLoadingError] = useState('')
   const [locationData, setLocationData] = useState({
     lat: 0,
     lon: 0,
-    city: '',
+    city: 'Земля',
   })
 
   useEffect(() => {
@@ -35,12 +38,13 @@ const App = () => {
             ...locationData,
             city: res.name,
           })
-          setIsLoading(false)
+          // setIsLoading(false)
         })
         .catch((error) => {
-          console.log(error)
+          console.log(`Error in getCurrentWeather(): ${error}`)
+          setLoadingError(`Error in getCurrentWeather(): ${error}`)
           setIsLoaded(true)
-          setIsLoading(false)
+          // setIsLoading(false)
         })
     }
 
@@ -50,12 +54,17 @@ const App = () => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res)
+          setForecastIsLoaded(true)
           setIsLoading(false)
-          setForecast([...res.daily])
+          setForecastWeek([...res.daily])
+          setForecastDay([...res.hourly])
+          // setIsLoaded(true)
         })
         .catch((error) => {
-          console.log(error)
-          setIsLoaded(true)
+          setLoadingError(`Error in getForecast(): ${error}`)
+          console.log(`Error in getForecast(): ${error}`)
+          setForecastIsLoaded(true)
+          // setIsLoaded(true)
           setIsLoading(false)
         })
     }
@@ -76,34 +85,45 @@ const App = () => {
             return setGeoPositionIsLoaded(true)
           },
           function (error) {
+            console.log(error)
             setGeoPositionIsLoaded(true)
             return setIsLoading(false)
           },
         )
-      } else {
-        setGeoPositionIsLoaded(true)
-        return setIsLoading(false)
       }
+
+      setGeoPositionIsLoaded(true)
+      return setIsLoading(false)
     }
 
     if (!geoPositionIsLoaded && !isLoaded) {
       getGeoLocation()
     }
-    if (!isLoaded && geoPositionIsLoaded && !isLoading) {
-      getCurrentWeather()
+    if (!isLoaded && !forecastIsLoaded && geoPositionIsLoaded && !isLoading) {
       getForecast()
+      getCurrentWeather()
     }
-  }, [weatherData, isLoading, geoPositionIsLoaded, isLoaded, locationData])
+  }, [
+    weatherData,
+    isLoading,
+    geoPositionIsLoaded,
+    isLoaded,
+    locationData,
+    forecastIsLoaded,
+  ])
 
   return (
     <div className="app">
       <WeatherContext.Provider
         value={{
           weatherData: weatherData,
-          isLoading: isLoading,
+          isLoading: !forecastIsLoaded || !isLoaded,
           isLoaded: isLoaded,
-          forecast: forecast,
+          forecast: forecastWeek,
+          forecastDay: forecastDay,
           locationData: locationData,
+          loadingError: loadingError,
+          // forecastIsLoaded: forecastIsLoaded
         }}
       >
         <MainPage />
